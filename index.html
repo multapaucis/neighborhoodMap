@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="css/neighborhood.css">
+  <title>Mile High Dog Parks</title>
+</head>
+<body>
+
+  <div class="header"><h1>Mile High Dog Parks</h1></div>
+  <div class="container">
+    <div class="sidebar">
+      <ul data-bind="foreach: locationList">
+        <li data-bind="text: locName, click: selectLocation"></li>
+      </ul>
+    </div>
+    <div id="map"></div>
+  </div>
+
+  <script src="js/lib/knockout-3.2.0.js"></script>
+  <script src="js/neighborhood.js"></script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAo3153hujXfzH7KQkivd3XWkK-ntcnMTA&v=3&callback=initMap"></script>
+</body>
+</html>

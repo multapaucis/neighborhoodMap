@@ -1,3 +1,4 @@
+//Google Map Functionality
 var map;
 
 function initMap() {
@@ -5,7 +6,23 @@ function initMap() {
         center: {lat: 39.920541, lng: -105.086650},
         zoom: 12
       });
-    };
+
+    for (var i = 0; i < locations.length; i++) {
+    //Create a marker for the location
+        var marker = new google.maps.Marker({
+            position: locations[i].latlng,
+            title: locations[i].name,
+            animation: google.maps.Animation.DROP,
+            id:i
+          });
+        marker.setMap(map);
+    }
+};
+
+
+
+
+//Knockout Functionality
 
 var locations = [
     {
@@ -29,7 +46,10 @@ var ViewModel = function(){
     this.locationList = ko.observableArray([]);
 
     locations.forEach(function(locItem){
+        //Add location to list as KO Object
         self.locationList.push( new Location(locItem));
+
+
     });
 
     this.selectLocation = function(location) {

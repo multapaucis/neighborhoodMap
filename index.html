@@ -7,17 +7,25 @@
 </head>
 <body>
 
-  <div class="header"><h1>Mile High Dog Parks</h1></div>
+  <div class="header">
+    <h2>Mile High Dog Parks</h2>
+    <input id="show-list" type="button" value="Show List" data-bind="click: showList, visible: !listShowing()">
+    <input id="hide-list" type="button" value="Hide List" data-bind="click: hideList, visible: listShowing()">
+  </div>
   <div class="container">
-    <div class="sidebar">
+    <div id="sidebar" data-bind="visible: listShowing()">
+      <select data-bind="options: availableCities, value: chosenCity">
+      </select>
       <ul data-bind="foreach: locationList">
-        <li data-bind="text: locName, click: selectLocation"></li>
+        <li data-bind="text: locName, click: selectLocation, visible: showPark(city)"></li>
       </ul>
     </div>
-    <div id="map"></div>
+    <div id="map" data-bind="css: {'small-map': listShowing()}"></div>
   </div>
 
+
   <script src="js/lib/knockout-3.2.0.js"></script>
+  <script src="js/lib/jquery.min.js"></script>
   <script src="js/neighborhood.js"></script>
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAo3153hujXfzH7KQkivd3XWkK-ntcnMTA&v=3&callback=initMap"></script>
 </body>

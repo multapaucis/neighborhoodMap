@@ -20,7 +20,12 @@ html, body {
   padding-left: 10px;
 }
 
-.sidebar {
+h2 {
+  display: inline-block;
+}
+
+
+#sidebar {
   border: 1px solid #999;
   height: 100%;
   text-align: left;
@@ -32,8 +37,14 @@ html, body {
 #map {
   height: 100%;
   border: 1px solid #999;
-  transition: margin-left .5s;
   padding: 20px;
-  margin-left: 300px;
 
+}
+
+.small-map {
+  margin-left: 300px;
+}
+
+.info {
+  text-transform: capitalize;
 }

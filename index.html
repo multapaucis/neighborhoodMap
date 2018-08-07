@@ -9,20 +9,19 @@
 
   <div class="header">
     <h2>Mile High Dog Parks</h2>
-    <input id="show-list" type="button" value="Show List" data-bind="click: showList, visible: !listShowing()">
-    <input id="hide-list" type="button" value="Hide List" data-bind="click: hideList, visible: listShowing()">
+    <input class="show-or-hide" type="button" value="Show List" data-bind="click: showList, visible: !listShowing()">
+    <input class="show-or-hide" type="button" value="Hide List" data-bind="click: hideList, visible: listShowing()">
   </div>
   <div class="container">
     <div id="sidebar" data-bind="visible: listShowing()">
       <select data-bind="options: availableCities, value: chosenCity">
       </select>
       <ul data-bind="foreach: locationList">
-        <li data-bind="text: locName, click: selectLocation, visible: showPark(city, showing)"></li>
+        <li class="list-location" data-bind="text: locName, click: selectLocation, visible: showing"></li>
       </ul>
     </div>
     <div id="map" data-bind="css: {'small-map': listShowing()}"></div>
   </div>
-
 
   <script src="js/lib/knockout-3.2.0.js"></script>
   <script src="js/lib/jquery.min.js"></script>

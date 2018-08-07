@@ -48,3 +48,7 @@ h2 {
 .info {
   text-transform: capitalize;
 }
+
+.list-location:hover {
+  font-size: 110%;
+}

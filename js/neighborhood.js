@@ -145,7 +145,6 @@ var Location = function(data){
     this.locLatLng = ko.observable(data.latlng);
     this.city = ko.observable(data.city);
     this.showing = ko.observable(true);
-    this.marker = null;
 }
 
 
@@ -185,7 +184,6 @@ var ViewModel = function(){
                 populateInfoWindow(mark);
             };
         })
-        updateMarkers();
     };
     self.hideList = function() {
         self.listShowing(false);
@@ -193,22 +191,33 @@ var ViewModel = function(){
     self.showList = function() {
         self.listShowing(true);
     };
-    self.showPark = function(city, showing) {
-        var toShow = null;
-        if (chosenCity() == 'Show All Parks') {
-            toShow = true;
-            showing(true);
-        } else if (city() == chosenCity()){
-            toShow = true;
-            showing(true);
-        } else {
-            toShow = false;
-            showing(false);
-        }
-        return toShow;
-    };
+
+    self.chosenCity.subscribe(function(){
+        updateMarkers();
+    })
     self.updateMarkers = function() {
-        console.log(locationList());
+        self.hideMarkers();
+        for (var i = 0; i < markers.length; i++) {
+            updateShowing(locationList()[i]);
+            if(locationList()[i]['showing']() == true) {
+                markers[i].setMap(map);
+            }
+        }
+    };
+    self.hideMarkers = function() {
+        infowindow.close();
+        markers.forEach(function(mark){
+            mark.setMap(null);
+        });
+    };
+    self.updateShowing= function(location) {
+        if (chosenCity() == 'Show All Parks') {
+            location.showing(true);
+        } else if (location.city() == chosenCity()){
+            location.showing(true);
+        } else {
+            location.showing(false);
+        }
     };
 
 }

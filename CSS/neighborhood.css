@@ -4,11 +4,15 @@ html, body {
   padding: 0;
 }
 
+h1, h2, p, li, .city-select {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
 .container {
-        height: 90%;
-        position: fixed;
-        margin-top: 70px;
-        width: 100%
+  height: 90%;
+  position: fixed;
+  margin-top: 70px;
+  width: 100%
 }
 
 .header {
@@ -17,21 +21,23 @@ html, body {
   position: fixed;
   top: 0;
   left: 0;
-  padding-left: 10px;
+  background: rgb(0, 0, 139);
 }
 
-h2 {
+.page-title {
   display: inline-block;
+  margin: 20px;
+  color: white;
 }
 
 
 #sidebar {
   border: 1px solid #999;
   height: 100%;
-  text-align: left;
   width: 300px;
   position: fixed;
   left: 0;
+  background: rgba(134, 89, 45, 0.2);
 }
 
 #map {
@@ -50,5 +56,49 @@ h2 {
 }
 
 .list-location:hover {
-  font-size: 110%;
+  font-size: 105%;
+}
+
+.show-or-hide {
+  background: #8B0000;
+  font-size: 16px;
+  color: white;
+  border-radius: 2px;
+  border: 2px solid white;
+  margin: 10px;
+  padding: 5px;
+  width: 100px;
+}
+
+.city-select  {
+  width: 80%;
+  height: 30px;
+  position: relative;
+  margin: 10px;
+  font-size: 1em;
+}
+
+
+
+
+@media screen and (max-width: 490px) {
+  .header {
+    height: 100px;
+  }
+  .container {
+    margin-top: 100px;
+  }
+  .page-title{
+    font-size: 1.60em;
+    display: block;
+    margin: 0;
+    margin-top: 10px;
+    width: 100%;
+    text-align: center;
+  }
+  .show-or-hide {
+    margin: auto;
+    display: block;
+    margin-top: 5px;
+  }
 }

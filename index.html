@@ -8,13 +8,13 @@
 <body>
 
   <div class="header">
-    <h2>Mile High Dog Parks</h2>
+    <h1 class="page-title">Mile High Dog Parks</h1>
     <input class="show-or-hide" type="button" value="Show List" data-bind="click: showList, visible: !listShowing()">
     <input class="show-or-hide" type="button" value="Hide List" data-bind="click: hideList, visible: listShowing()">
   </div>
   <div class="container">
     <div id="sidebar" data-bind="visible: listShowing()">
-      <select data-bind="options: availableCities, value: chosenCity">
+      <select class="city-select" data-bind="options: availableCities, value: chosenCity">
       </select>
       <ul data-bind="foreach: locationList">
         <li class="list-location" data-bind="text: locName, click: selectLocation, visible: showing"></li>

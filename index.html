@@ -17,7 +17,7 @@
       <select class="city-select" data-bind="options: availableCities, value: chosenCity">
       </select>
       <ul data-bind="foreach: locationList">
-        <li class="list-location" data-bind="text: locName, click: selectLocation, visible: showing"></li>
+        <li class="list-location" data-bind="text: locName, click: selectLocation, visible: showing, event: {mouseover: highlightMarker, mouseout: unhighlightMarker}"></li>
       </ul>
     </div>
     <div id="map" data-bind="css: {'small-map': listShowing()}"></div>
@@ -25,7 +25,7 @@
 
   <script src="js/lib/knockout-3.2.0.js"></script>
   <script src="js/lib/jquery.min.js"></script>
-  <script src="js/neighborhood.js"></script>
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAo3153hujXfzH7KQkivd3XWkK-ntcnMTA&v=3&callback=initMap"></script>
+  <script src="js/neighborhood.js"></script>
 </body>
 </html>

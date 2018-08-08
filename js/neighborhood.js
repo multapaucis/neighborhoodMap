@@ -85,10 +85,11 @@ var ViewModel = function(){
                 animation: google.maps.Animation.DROP,
                 opacity: 0.7
             });
-            //
+            //Opens InfoWindow when Marker is Clicked
             marker.addListener('click', function() {
                 populateInfoWindow(this);
             })
+            //Highlights marker on Mouseover
             marker.addListener('mouseover', function() {
                 this.setOpacity(1);
             })
@@ -147,8 +148,6 @@ var ViewModel = function(){
     };
     self.getWeather = function(locKey, infoTemplate) {
         //Retrieve Location Weather information
-        var weatherText = null;
-        var weatherTemp = null;
         var weatherURL = "http://dataservice.accuweather.com/currentconditions/v1/" + locKey;
         $.ajax({
             type: 'GET',
@@ -159,8 +158,8 @@ var ViewModel = function(){
             },
             async: true
         }).done( function(results){
-                weatherText = results[0]['WeatherText'];
-                weatherTemp = results[0]['Temperature']['Imperial']['Value'];
+                var weatherText = results[0]['WeatherText'];
+                var weatherTemp = results[0]['Temperature']['Imperial']['Value'];
                 var safety = self.safeTemp(weatherTemp);
                 weatherInfo = '<br>'+ weatherText+ " at " +weatherTemp+ ' degrees<br>' +safety+ '</div>';
                 infowindow.setContent(infoTemplate + weatherInfo);
@@ -172,6 +171,7 @@ var ViewModel = function(){
 
     };
     self.safeTemp = function(currentTemp) {
+        //Takes in Temperature and returns a text response
         safetyRating = null;
         if (currentTemp < 32) {
             safetyRating = "Too Cold for Dogs";
@@ -187,6 +187,7 @@ var ViewModel = function(){
         return safetyRating;
     };
     self.selectLocation = function(location) {
+        //Opens the infowindow when a location is selcted from the sidebar
         populateInfoWindow(location.marker);
     };
     self.hideList = function() {

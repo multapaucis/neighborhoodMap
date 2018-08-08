@@ -19,6 +19,7 @@
       <ul data-bind="foreach: locationList">
         <li class="list-location" data-bind="text: locName, click: selectLocation, visible: showing, event: {mouseover: highlightMarker, mouseout: unhighlightMarker}"></li>
       </ul>
+      <span class="accuweather">Weather Data provided by <a href="https://www.accuweather.com/">Accuweather</a></span>
     </div>
     <div id="map" data-bind="css: {'small-map': listShowing()}"></div>
   </div>

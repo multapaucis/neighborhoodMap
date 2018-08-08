@@ -37,7 +37,8 @@ var locations = [
         latlng: {lat: 40.004287, lng: -105.075409},
         city: "Lafayette"
     }
-]
+];
+
 //Creation of KO Object Template
 var Location = function(data){
     this.locName = ko.observable(data.name);
@@ -45,7 +46,7 @@ var Location = function(data){
     this.city = ko.observable(data.city);
     this.showing = ko.observable(true);
     this.marker = null;
-}
+};
 
 
 var ViewModel = function(){
@@ -68,16 +69,20 @@ var ViewModel = function(){
         infowindow = new google.maps.InfoWindow();
         //Call for creation of Markers
         self.createMarkers();
-    }
+    };
+
+    self.googleError = function() {
+        alert('We were unable to access Google Maps. Please try reloading the page.');
+    };
 
     self.createMarkers = function() {
         //Add all locations to the Observable Array as KO Objects
         locations.forEach(function(locItem){
-            var newLoc = new Location(locItem)
+            var newLoc = new Location(locItem);
             //Add cities of locations to available cities list if not already included
             if (self.availableCities.indexOf(newLoc.city()) == -1) {
                 self.availableCities.push(newLoc.city());
-            };
+            }
             //Create a new marker for each location
             var marker = new google.maps.Marker({
                 position: locItem.latlng,
@@ -88,21 +93,21 @@ var ViewModel = function(){
             //Opens InfoWindow when Marker is Clicked
             marker.addListener('click', function() {
                 populateInfoWindow(this);
-            })
+            });
             //Highlights marker on Mouseover
             marker.addListener('mouseover', function() {
                 this.setOpacity(1);
-            })
+            });
             marker.addListener('mouseout', function() {
                 this.setOpacity(0.7);
-            })
+            });
             //Assigns the Marker to the current Map
             marker.setMap(map);
             //adds marker to the location
             newLoc.marker = marker;
             // Ads the location to the Observable Array
             self.locationList.push(newLoc);
-        })
+        });
     };
 
     self.populateInfoWindow = function(marker) {
@@ -110,15 +115,23 @@ var ViewModel = function(){
         if (infowindow.marker != marker) {
             // Clear the infowindow content
             infowindow.setContent('');
+            //Makes sure no other Markers are still bouncing
+            locationList().forEach(function(loc){
+                loc.marker.setAnimation(null);
+            });
+            //Sets the selected marker to bounce
+            marker.setAnimation(google.maps.Animation.BOUNCE);
             infowindow.marker = marker;
-            // Make sure the marker is cleared if the infowindow is closed.
+            // Make sure the marker is cleared and bouncing stops if the infowindow is closed.
             infowindow.addListener('closeclick', function() {
                 infowindow.marker = null;
+                marker.setAnimation(null);
+
             });
             self.prepInfowindow(marker);
             // Open the infowindow on the marker.
             infowindow.open(map, marker);
-        };
+        }
     };
     self.prepInfowindow = function(marker) {
         //Retrieve Location information from Marker
@@ -140,13 +153,13 @@ var ViewModel = function(){
             async: true
         }).done( function(results){
             locKey = results['Key'];
-            self.getWeather(locKey, infoTemplate);
+            self.getWeather(locKey, infoTemplate, weatherInfo);
         }).fail( function(){
             infowindow.setContent(infoTemplate + weatherInfo);
             return infoTemplate;
         });
     };
-    self.getWeather = function(locKey, infoTemplate) {
+    self.getWeather = function(locKey, infoTemplate, weatherInfo) {
         //Retrieve Location Weather information
         var weatherURL = "http://dataservice.accuweather.com/currentconditions/v1/" + locKey;
         $.ajax({
@@ -183,7 +196,7 @@ var ViewModel = function(){
             safetyRating = "Careful It's Pretty Hot Out";
         } else {
             safetyRating = "Too Hot for Dogs";
-        };
+        }
         return safetyRating;
     };
     self.selectLocation = function(location) {
@@ -201,17 +214,15 @@ var ViewModel = function(){
     });
     self.highlightMarker = function(location) {
         location.marker.setOpacity(1);
-        //location.marker.setAnimation(google.maps.Animation.BOUNCE);
-    }
+    };
     self.unhighlightMarker = function(location) {
         location.marker.setOpacity(0.7);
-        //location.marker.setAnimation(null);
-    }
+    };
     self.updateMarkers = function() {
         self.hideMarkers();
         locationList().forEach(function(loc){
             updateShowing(loc);
-            if(loc['showing']() == true) {
+            if(loc.showing() == true) {
                 loc.marker.setMap(map);
                 loc.marker.setAnimation(google.maps.Animation.DROP);
             }
@@ -221,6 +232,7 @@ var ViewModel = function(){
         infowindow.close();
         locationList().forEach(function(loc){
             loc.marker.setMap(null);
+            loc.marker.setAnimation(null);
         });
     };
     self.updateShowing= function(location) {
@@ -231,7 +243,7 @@ var ViewModel = function(){
         }
     };
 
-}
+};
 
 
 ko.applyBindings(ViewModel());
